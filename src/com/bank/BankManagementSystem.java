@@ -5,18 +5,18 @@ import java.util.List;
 
 public class BankManagementSystem {
 
-	private static List<Account> accounts;
+	private List<Account> accounts;
 	
 	
 	
 	
-	public static List<Account> getAccounts() {
+	public  List<Account> getAccounts() {
 		return accounts;
 	}
 
 
-	public static void setAccounts(List<Account> accounts) {
-		BankManagementSystem.accounts = accounts;
+	public void setAccounts(List<Account> accounts) {
+		this.accounts = accounts;
 	}
 
 
@@ -26,19 +26,9 @@ public class BankManagementSystem {
 	}
 
 	
-	public static boolean withdrawalTXN(Account account, double amount)
-	{
-		if (checkAccount(account))
-		{
-			if ( account.withdrawalTXN(amount) != -1.00)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+
 	
-	public static double withdrawalTXN(String accountNumber, double amount)
+	public double withdrawalTXN(String accountNumber, double amount)
 	{
 		Account account = returnAccountByAccNum(accountNumber); ;
 
@@ -51,17 +41,24 @@ public class BankManagementSystem {
 		return account.withdrawalTXN(amount);
 	}
 	
-	public static boolean depositTXN (Account account, double amount)
-	{
-			if ( account.depositTXN(amount) != -1.00)
+	public double depositTXN(String accountNumber, Double amt) {
+		Account account =returnAccountByAccNum(accountNumber);
+		if (!(account.equals(null)))
+		{
+			if (checkAccount(account))
 			{
-				return true;
+				return account.depositTXN(amt);			
 			}
+		}
 		
-		return false;
+		return account.depositTXN(amt);	
+
+		
 	}
 	
-	private static boolean checkAccount (Account account)
+	
+	
+	private boolean checkAccount (Account account)
 	{
 		for (Account acc : accounts)
 		{
@@ -75,7 +72,7 @@ public class BankManagementSystem {
 		
 	}
 	
-	private static boolean checkAccount(String accountNumber) {
+	private boolean checkAccount(String accountNumber) {
 	
 		for (int i =0; i<accounts.size() ; i++)
 		{
@@ -88,7 +85,7 @@ public class BankManagementSystem {
 	}
 	
 	
-	public static Account returnAccountByAccNum(String accountNumber)
+	public Account returnAccountByAccNum(String accountNumber)
 	{
 		for (int i = 0; i< accounts.size(); i++)
 		{
@@ -105,20 +102,7 @@ public class BankManagementSystem {
 	}
 
 
-	public static double depositTXN(String accountNumber, Double amt) {
-		Account account =returnAccountByAccNum(accountNumber);
-		if (!(account.equals(null)))
-		{
-			if (checkAccount(account))
-			{
-				return account.depositTXN(amt);			
-			}
-		}
-		
-		return account.depositTXN(amt);	
-
-		
-	}
+	
 	
 	
 	

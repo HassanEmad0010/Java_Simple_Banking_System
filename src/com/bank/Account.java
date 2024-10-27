@@ -5,6 +5,30 @@ public class Account implements AccountInterface {
 	private String accountNumber, accountHolder ;
 	private Double balance;
 	private static final int MAX_WITHDRAWAL_TXNS = 3;
+	public int getNumOfWithdrawalTxns() {
+		return numOfWithdrawalTxns;
+	}
+
+
+
+	public void setNumOfWithdrawalTxns(int numOfWithdrawalTxns) {
+		this.numOfWithdrawalTxns = numOfWithdrawalTxns;
+	}
+
+
+
+	public static int getMaxWithdrawalTxns() {
+		return MAX_WITHDRAWAL_TXNS;
+	}
+
+
+
+	public static int getMaxDepositTxns() {
+		return MAX_DEPOSIT_TXNS;
+	}
+
+
+
 	private static final int MAX_DEPOSIT_TXNS = 2;
 	private int numOfWithdrawalTxns =0;
 	private int numOfDepositTXNS =0;
@@ -42,6 +66,10 @@ public class Account implements AccountInterface {
 		
 		return getBalance();
 	}
+	
+	
+
+	
 	@Override
 	public double withdrawalTXN(double amount) {
 		if (getNumberOfWithdrawalTxns() < MAX_WITHDRAWAL_TXNS)
@@ -50,7 +78,7 @@ public class Account implements AccountInterface {
 			{
 				increaseWithdrawalTxns();
 				setBalance(balance - amount);
-				return this.balance - amount;
+				return this.getBalance();
 			}
 		}
 		return -1.00;
@@ -62,15 +90,18 @@ public class Account implements AccountInterface {
 		
 		
 	@Override
-	public double depositTXN(double amount) {
+	public double depositTXN(double amount) 
+	{
 		if (numOfDepositTXNS < MAX_DEPOSIT_TXNS)
 		{
+			
 		increaseDepositTxns();
-		setBalance(balance + amount);
-		return getBalance();
+		setBalance(this.getBalance ()+ amount);
+		return this.getBalance();
 		}
-		return -1.00;
 		
+		return -1.00;
+
 		}
 
 
@@ -113,6 +144,30 @@ public class Account implements AccountInterface {
 	public String toString() {
 		return "Account [accountNumber=" + accountNumber + ", accountHolder=" + accountHolder + ", balance=" + balance
 				+ ", numOfWithdrawalTxns=" + numOfWithdrawalTxns + ", numOfDepositTXNS=" + numOfDepositTXNS + "]";
+	}
+
+
+
+	@Override
+	public int remainWithdrawalTXNS() {
+
+		return getMaxWithdrawalTxns() - getNumberOfWithdrawalTxns();
+	
+	}
+
+
+
+	@Override
+	public int remaindepositTXNS() {
+	return getMaxDepositTxns() - getNumOfDepositTXNS();
+	}
+
+
+
+	@Override
+	public int remaindTXNS() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

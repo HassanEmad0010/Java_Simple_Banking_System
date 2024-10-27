@@ -13,6 +13,8 @@ public class MainClass {
 	{
 		Scanner input = new Scanner(System.in);
 		List<Account> accounts = new ArrayList<>();
+		BankManagementSystem bankManagementSystem = new BankManagementSystem(accounts);
+		
 		/*
 		 * Account hassanAccount = new Account("1000010342", "Hassan Emad", 20000.00);
 		 * Account AliAccount = new Account("20003943300", "ALi ALI", 15000.22);
@@ -42,18 +44,23 @@ public class MainClass {
 		boolean closeFlag = false;
 		
 		do {
-			System.out.println("				*******Welcome on our testing Bank System*******");
+			System.out.println("-----------------------------------------------------");
+			System.out.println("	Welcome to our testing Bank System");
+			System.out.println("-----------------------------------------------------");
+
 
 			switch (mainMenuChoise) {
 			case 0: {
-				
-				System.out.println(" --The_Main_Menu--");
-				System.out.println("TO regist a new account press 1");
-				System.out.println("TO display account info press 2");
-				System.out.println("TO Withdraw amount press 3");
-				System.out.println("TO deposit amount press 4");
+				System.out.println("------------------");
+				System.out.println(" The Main Menu:-");
+				System.out.println("------------------");
+				System.out.println("TO regist a new account ----> 1");
+				System.out.println("TO display account info ----> 2");
+				System.out.println("TO Withdraw amount ---------> 3");
+				System.out.println("TO deposit amount ----------> 4");
+				System.out.println("TO close -------------------> 0");	
+				System.out.println("-----------------------------------------------------");
 
-				System.out.println("TO close press 0");			
 				int choise = input.nextInt();
 
 
@@ -64,8 +71,10 @@ public class MainClass {
 				break;
 			}
 			case 1: {
-				System.out.println("------------ Register a new Account------------- ");
-				System.out.println("To return to the main menu press 000");
+				System.out.println("------------------------------");
+				System.out.println(" Register a new Account:-");
+				System.out.println(" -To return to the main --> 0");
+				System.out.println("------------------------------");
 
 				System.out.println("Add your account number");
 				String accNum = input.next();
@@ -92,9 +101,8 @@ public class MainClass {
 				}
 				Account account = new Account(accNum, accName, accAmount);
 				accounts.add(account);
-				BankManagementSystem.setAccounts(accounts);
+				bankManagementSystem.setAccounts(accounts);
 				System.out.println("* Account added successfully *");
-				System.out.println(account.toString());
 				System.out.println("");
 				mainMenuChoise =0;
 				break;
@@ -105,14 +113,18 @@ public class MainClass {
 				if (!accounts.isEmpty())
 				{
 					int accountCounter =1;
-				for (Account account : BankManagementSystem.getAccounts())
+				for (Account account : bankManagementSystem.getAccounts())
 				{
-					
-					System.out.printf("## 	Account: #%d:- 			  %n",accountCounter);
+					System.out.printf("		------------- %n");
+					System.out.printf("		Account: #%d:- %n",accountCounter);
+					System.out.printf("		------------- %n");
 					System.out.printf("## Account number is %s ## %n", account.getAccountNumber() );
 					System.out.printf("## Account name is %s ## %n", account.getAccountHolder());
 					System.out.printf("## Account balance is %.2f ## %n",account.getBalance());
+					System.out.printf("## Remaining withdrawal TXNS is %d ## %n",account.remainWithdrawalTXNS());					
+					System.out.printf("## Remaining deposit TXNS is %d ## %n",account.remaindepositTXNS());					
 					System.out.println("");
+					
 					accountCounter++;
 				}
 				
@@ -131,7 +143,7 @@ public class MainClass {
 					System.out.println("*Enter the amount to withdraw in EGP");
 					Double amt = input.nextDouble();
 					
-					double newBalance = BankManagementSystem.withdrawalTXN(accNum, amt);
+					double newBalance = bankManagementSystem.withdrawalTXN(accNum, amt);
 					
 					if (newBalance != -1.00)
 					{
@@ -163,7 +175,7 @@ public class MainClass {
 					System.out.println("*Enter the amount to deposit in EGP");
 					Double amt = input.nextDouble();
 					
-					double newBalance = BankManagementSystem.depositTXN(accNum, amt);
+					double newBalance = bankManagementSystem.depositTXN(accNum, amt);
 					
 					if (newBalance != -1.00)
 					{
